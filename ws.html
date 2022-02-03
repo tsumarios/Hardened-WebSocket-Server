@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client (WS)</title>
+</head>
+
+<body>
+    <input type="text" name="token" id="token" value="ebfb7ff0-b2f6-41c8-bef3-4fba17be410c">
+    <input type="button" value="Connect" onClick="connect();">
+    <input type="button" value="Disconnect" onClick="disconnect();">
+    <input type="text" name="text" id="message" placeholder="Add a message here">
+    <input type="button" value="Send" onClick="sendMessage();">
+    <textarea name="output" id="output" cols="30" rows="1"></textarea>
+</body>
+<script>
+
+    /* Button clicks handling */
+
+    const connect = () => {
+        token = document.getElementById('token').value;   // Assume the client retrieved its token from the auth server
+
+        // Create a WebSocket instance and register main events
+        ws_client = new WebSocket('ws://localhost:5678/');
+        ws_client.onopen = (event) => { onOpen(event); };
+        ws_client.onmessage = (event) => { onMessage(event); };
+        ws_client.onclose = (event) => { onClose(event); };
+        ws_client.onerror = (event) => { onError(event); };
+    };
+
+    const sendMessage = () => {
+        let message = document.getElementById('message').value;
+        ws_client.send(JSON.stringify({ 'msg': message }));
+    }
+
+    const disconnect = () => { ws_client.close(); }
+
+    /* WebSocket main events handling */
+
+    const onOpen = (event) => { ws_client.send(JSON.stringify({ token })); };
+    const onMessage = (event) => {
+        console.log(event.data);
+        document.getElementById('output').value = event.data;
+    };
+    const onClose = (event) => {
+        console.log('Connection closed.', event.reason);
+        document.getElementById('output').value = `Disconnected. ${event.reason}`;
+    };
+    const onError = (event) => {
+        ws_client.close();
+        document.getElementById('output').value = `Error. ${event.reason}`;
+    };
+
+</script>
+
+</html>
