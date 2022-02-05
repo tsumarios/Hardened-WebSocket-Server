@@ -51,7 +51,6 @@ class SimpleEchoHandler(WebSocket):
         logging.info('> Client disconnected %s' % self.address[0])
 
 
-
 def main():
     # Arguments parsing
     parser = OptionParser(usage="usage: %prog [options]", version="%prog 1.0")
@@ -60,14 +59,16 @@ def main():
     parser.add_option("--ssl", default=0, type='int', action="store", dest="ssl", help="ssl (1: on, 0: off (default))")
     parser.add_option("--cert", default='./cert.pem', type='string', action="store", dest="cert", help="cert (./cert.pem)")
     parser.add_option("--key", default='./key.pem', type='string', action="store", dest="key", help="key (./key.pem)")
-    parser.add_option("--ver", default=ssl.PROTOCOL_TLSv1, type=int, action="store", dest="ver", help="ssl version")
+    parser.add_option("--ver", default=ssl.PROTOCOL_TLSv1_2, type=int, action="store", dest="ver", help="ssl version")
 
     (options, args) = parser.parse_args()
 
-    if options.ssl == 1:    # $ openssl req -new -x509 -days 365 -nodes -out cert.pem -keyout key.pem
+    if options.ssl == 1:
+        # NOTE: To generate TLS certificate and key run the following command.
+        # $ openssl req -new -x509 -days 365 -nodes -out cert.pem -keyout key.pem
         ws_server = SimpleSSLWebSocketServer(options.host, options.port, SimpleEchoHandler, options.cert, options.key, version=options.ver)
         httpd = HTTPServer(('', 443), SimpleHTTPRequestHandler)
-        httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='./cert.pem', keyfile='./key.pem', ssl_version=ssl.PROTOCOL_TLSv1)
+        httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='./cert.pem', keyfile='./key.pem', ssl_version=options.ver)
     else:
         ws_server = SimpleWebSocketServer(options.host, options.port, SimpleEchoHandler)
         httpd = HTTPServer(('', 80), SimpleHTTPRequestHandler)
