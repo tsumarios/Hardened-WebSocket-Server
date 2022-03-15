@@ -43,7 +43,7 @@
     const onOpen = (event) => { ws_client.send(JSON.stringify({ token })); };
     const onMessage = (event) => {
         console.log(event.data);
-        document.getElementById('output').value = event.data;
+        document.getElementById('output').value = event.data;   // NOTE: XSS here, don't do this.
     };
     const onClose = (event) => {
         console.log('Connection closed.', event.reason);
