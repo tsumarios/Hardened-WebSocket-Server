@@ -6,7 +6,7 @@ The WS client sends its authentication token to the WS server as first message a
 
 ![WS Ticket-Based Auth](/img/ws_ticket-based_auth.png)
 
-This demo is part of the "WebSocket (In)Security and Authentication" articles (written in Italian) available at <https://blog.rev3rse.it/> TODO: link.
+This demo is part of the "WebSocket (In)Security and Authentication" articles (written in Italian) available at <https://blog.rev3rse.it/websocket-insecurity-1>  and  <https://blog.rev3rse.it/websocket-insecurity-2>.
 
 ## Dependencies
 
@@ -27,10 +27,10 @@ pip3 install -r requirements.txt
 Then, you can run the HTTP server within the WebSocket server by typing the following command:
 
 ```sh
-python3 ws_server.py TODO: parameters
+python3 ws_server.py [--host <string>] [--port <int>] [--ssl <int>] [--cert <string>] [--key <string>] [--ver <int>]
 ```
 
-Note that by default the HTTP server will be listening on port 80 (or 443 if using HTTPS) and the WebSocket server will be using port 5678. The arguments are referring to the WebSocket server.
+where the arguments are referring to the WebSocket server. Note that by default the HTTP server will be listening on port 80 (or 443 if using HTTPS) and the WebSocket server will be using port 5678.
 
 Eventually, you can open your favourite browser and go at <http://localhost/> (or <https://localhost/> if using TLS) and open the ws.html (or wss.html) file to interact with the WS server.
 
