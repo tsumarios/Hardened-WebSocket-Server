@@ -14,7 +14,7 @@
     <input type="button" value="Disconnect" onClick="disconnect();">
     <input type="text" name="text" id="message" placeholder="Add a message here">
     <input type="button" value="Send" onClick="sendMessage();">
-    <textarea name="output" id="output" cols="30" rows="1"></textarea>
+    <div name="output" id="output" cols="30" rows="1"></div>
 </body>
 <script>
 
@@ -43,15 +43,15 @@
     const onOpen = (event) => { ws_client.send(JSON.stringify({ token })); };
     const onMessage = (event) => {
         console.log(event.data);
-        document.getElementById('output').value = event.data;   // NOTE: XSS here, don't do this.
+        document.getElementById('output').textContent = event.data;
     };
     const onClose = (event) => {
         console.log('Connection closed.', event.reason);
-        document.getElementById('output').value = `Disconnected. ${event.reason}`;
+        document.getElementById('output').textContent = `Disconnected. ${event.reason}`;
     };
     const onError = (event) => {
         ws_client.close();
-        document.getElementById('output').value = `Error. ${event.reason}`;
+        document.getElementById('output').textContent = `Error. ${event.reason}`;
     };
 
 </script>
