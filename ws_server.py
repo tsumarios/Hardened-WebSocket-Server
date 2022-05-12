@@ -36,7 +36,10 @@ def login_required(func):
 
 
 class SimpleEchoHandler(WebSocket):
-    authenticated = False
+
+    def __init__(self, server, sock, address):
+        super().__init__(server, sock, address)
+        self.authenticated = False
 
     @login_required
     def handleMessage(self):
