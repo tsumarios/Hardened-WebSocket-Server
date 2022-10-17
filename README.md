@@ -50,4 +50,9 @@ If the TLS protocol is enabled, remember to open the wss.html file instead of th
 - LinkedIn: linkedin.com/in/marioraciti
 - Twitter: twitter.com/tsumarios
 
+*If you want to support me, I would be grateful ❤️*
+
+<a href="https://www.buymeacoffee.com/tsumarios" target="_blank"><img
+        src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="40"></a>
+
 **Enjoy WebSockets!**
